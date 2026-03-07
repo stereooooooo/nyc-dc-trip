@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Browns NYC & DC Trip</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#f5f0e8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1117" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="NYC-DC Trip">
+  <link rel="apple-touch-icon" href="icon-192.png">
   <style>
     :root {
       --bg: #f5f0e8;
@@ -104,18 +111,33 @@
     .header h1 span.nyc { color: var(--accent-nyc); }
     .header h1 span.dc { color: var(--accent-dc); }
 
+    .header-buttons {
+      display: flex;
+      gap: 6px;
+    }
+
+    .header-btn {
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .header-btn:hover { opacity: 0.85; }
+
     .action-items-btn {
       background: var(--action-btn-bg);
       color: var(--text-action);
       border: 1px solid var(--action-btn-border);
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
     }
-    .action-items-btn:hover { opacity: 0.85; }
+
+    .travel-info-btn {
+      background: var(--tag-transport-bg);
+      color: var(--link-color);
+      border: 1px solid var(--map-btn-border);
+    }
 
     .day-tabs {
       display: flex;
@@ -446,6 +468,81 @@
       display: block;
     }
 
+    /* Travel info cards */
+    .travel-section { margin-bottom: 18px; }
+    .travel-section-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+    .travel-card {
+      background: var(--card-active);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 8px;
+    }
+    .travel-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .travel-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--text-dim);
+    }
+    .travel-row span { color: var(--text); font-weight: 500; }
+    .travel-label { color: var(--text-dim); font-size: 11px; }
+    .travel-route {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 6px 0;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .travel-route .arrow { color: var(--text-dim); }
+    .travel-detail {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .travel-detail strong { color: var(--text); font-weight: 600; }
+    .confirm-num {
+      font-family: 'SF Mono', 'Menlo', monospace;
+      font-size: 12px;
+      background: var(--tip-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--link-color);
+    }
+
+    /* Weather bar */
+    .weather-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+    .weather-icon { font-size: 18px; }
+    .weather-temps {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .weather-temps .low { color: var(--text-dim); font-weight: 400; }
+    .weather-rain {
+      font-size: 11px;
+      color: var(--link-color);
+    }
+
     @media (max-width: 420px) {
       .day-tab { padding: 6px 10px; font-size: 12px; }
       .event-title { font-size: 14px; }
@@ -457,7 +554,10 @@
   <div class="header">
     <div class="header-top">
       <h1>Browns <span class="nyc">NYC</span> & <span class="dc">DC</span> Trip</h1>
-      <button class="action-items-btn" onclick="toggleModal()">Action Items</button>
+      <div class="header-buttons">
+        <button class="header-btn travel-info-btn" onclick="toggleTravelModal()">Travel</button>
+        <button class="header-btn action-items-btn" onclick="toggleModal()">Actions</button>
+      </div>
     </div>
     <div class="day-tabs" id="dayTabs"></div>
   </div>
@@ -469,6 +569,14 @@
       <button class="modal-close" onclick="toggleModal()">&times;</button>
       <h3>Pre-Trip Action Items</h3>
       <div id="actionItems"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="travelModalOverlay" onclick="closeTravelModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="toggleTravelModal()">&times;</button>
+      <h3 style="color: var(--link-color)">Travel Info</h3>
+      <div id="travelInfo"></div>
     </div>
   </div>
 
@@ -629,6 +737,104 @@ const ACTION_ITEMS = [
   'Check Dumbarton Oaks Gardens March hours'
 ];
 
+const TRAVEL_INFO = {
+  flights: [
+    {
+      label: 'Austin → New York',
+      airline: 'Delta Air Lines 1411',
+      confirmation: 'GDO4E4',
+      date: 'Sat, Mar 14',
+      depart: { time: '7:15 AM', code: 'AUS', city: 'Austin, TX' },
+      arrive: { time: '11:58 AM', code: 'JFK', city: 'New York, NY' },
+      duration: '3h 43m',
+      seats: '23F, 24D, 24E, 24F'
+    },
+    {
+      label: 'Washington DC → Austin',
+      airline: 'Southwest WN621',
+      date: 'Fri, Mar 20',
+      depart: { time: '5:45 PM', code: 'DCA', city: 'Washington, DC' },
+      arrive: { time: '8:45 PM', code: 'AUS', city: 'Austin, TX' },
+      duration: '4h 0m',
+      seats: '17A · 18A · 18B · 18C'
+    }
+  ],
+  train: {
+    label: 'New York → Washington DC',
+    service: 'Amtrak Acela 2155',
+    confirmation: '6E3C1B',
+    date: 'Tue, Mar 17',
+    depart: { time: '11:00 AM', station: 'Moynihan Train Hall at Penn Sta.' },
+    arrive: { time: '1:53 PM', station: 'Union Station, DC' },
+    seats: 'Car 6 — Seats 2D, 2F, 3D, 3F',
+    class: 'Acela Business Class'
+  },
+  hotels: [
+    {
+      name: 'Andaz 5th Avenue',
+      address: '485 5th Ave, New York, NY 10017',
+      phone: '1-212-601-1234',
+      confirmation: '150759RA007030',
+      dates: 'Mar 14 – Mar 17 (3 nights)',
+      room: 'Andaz Suite, 1 King Bed'
+    },
+    {
+      name: 'Riggs Washington DC',
+      address: '900 F St NW, Washington, DC 20004',
+      phone: '1-202-638-1800',
+      confirmation: 'EXP-2354528422',
+      dates: 'Mar 17 – Mar 20 (3 nights)',
+      room: 'Deluxe Room, 2 Double Beds'
+    }
+  ]
+};
+
+// Weather data cache
+let weatherData = {};
+
+const WMO_CODES = {
+  0: ['Clear', '\u2600\uFE0F'], 1: ['Mostly Clear', '\uD83C\uDF24\uFE0F'], 2: ['Partly Cloudy', '\u26C5'],
+  3: ['Overcast', '\u2601\uFE0F'], 45: ['Fog', '\uD83C\uDF2B\uFE0F'], 48: ['Fog', '\uD83C\uDF2B\uFE0F'],
+  51: ['Light Drizzle', '\uD83C\uDF26\uFE0F'], 53: ['Drizzle', '\uD83C\uDF26\uFE0F'], 55: ['Heavy Drizzle', '\uD83C\uDF26\uFE0F'],
+  61: ['Light Rain', '\uD83C\uDF27\uFE0F'], 63: ['Rain', '\uD83C\uDF27\uFE0F'], 65: ['Heavy Rain', '\uD83C\uDF27\uFE0F'],
+  71: ['Light Snow', '\uD83C\uDF28\uFE0F'], 73: ['Snow', '\uD83C\uDF28\uFE0F'], 75: ['Heavy Snow', '\uD83C\uDF28\uFE0F'],
+  80: ['Light Showers', '\uD83C\uDF26\uFE0F'], 81: ['Showers', '\uD83C\uDF27\uFE0F'], 82: ['Heavy Showers', '\uD83C\uDF27\uFE0F'],
+  95: ['Thunderstorm', '\u26C8\uFE0F'], 96: ['Thunderstorm', '\u26C8\uFE0F'], 99: ['Thunderstorm', '\u26C8\uFE0F']
+};
+
+async function fetchWeather() {
+  const cities = [
+    { name: 'nyc', lat: 40.7128, lon: -74.006, tz: 'America/New_York' },
+    { name: 'dc', lat: 38.9072, lon: -77.0369, tz: 'America/New_York' }
+  ];
+  for (const city of cities) {
+    try {
+      const res = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}` +
+        `&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code` +
+        `&temperature_unit=fahrenheit&timezone=${city.tz}&start_date=2026-03-14&end_date=2026-03-20`
+      );
+      const data = await res.json();
+      if (data.daily) {
+        data.daily.time.forEach((date, i) => {
+          weatherData[date + '-' + city.name] = {
+            high: Math.round(data.daily.temperature_2m_max[i]),
+            low: Math.round(data.daily.temperature_2m_min[i]),
+            rain: data.daily.precipitation_probability_max[i],
+            code: data.daily.weather_code[i]
+          };
+        });
+        renderDay(); // re-render with weather
+      }
+    } catch (e) { /* weather is optional */ }
+  }
+}
+
+function getWeather(day) {
+  const city = day.city === 'travel' ? 'nyc' : day.city;
+  return weatherData[day.fullDate + '-' + city];
+}
+
 let currentDay = 0;
 
 function init() {
@@ -640,6 +846,8 @@ function init() {
   renderTabs();
   renderDay();
   renderActionItems();
+  renderTravelInfo();
+  fetchWeather();
 }
 
 function renderTabs() {
@@ -688,11 +896,24 @@ function renderDay() {
   const currentIdx = getCurrentEventIndex(day);
   const cityClass = day.city === 'travel' ? 'travel' : day.city;
 
+  const weather = getWeather(day);
+  let weatherHtml = '';
+  if (weather) {
+    const [desc, icon] = WMO_CODES[weather.code] || ['--', ''];
+    weatherHtml = `<div class="weather-bar">
+      <span class="weather-icon">${icon}</span>
+      <span class="weather-temps">${weather.high}°<span class="low"> / ${weather.low}°F</span></span>
+      <span>${desc}</span>
+      ${weather.rain > 0 ? `<span class="weather-rain">${weather.rain}% rain</span>` : ''}
+    </div>`;
+  }
+
   let html = `
     <div class="day-header">
       <span class="city-tag ${cityClass}">${day.city === 'travel' ? 'NYC → DC' : day.city}</span>
       <h2>${day.title}</h2>
       <div class="subtitle">${day.subtitle}</div>
+      ${weatherHtml}
     </div>
     <div class="timeline">
   `;
@@ -787,6 +1008,66 @@ function closeModal(e) {
 
 const MAP_TOGGLE_ICON = '<svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>';
 
+function renderTravelInfo() {
+  const t = TRAVEL_INFO;
+  let html = '';
+
+  // Flights
+  html += '<div class="travel-section"><div class="travel-section-title">Flights</div>';
+  t.flights.forEach(f => {
+    html += `<div class="travel-card">
+      <div class="travel-card-title">${f.airline}</div>
+      <div class="travel-detail">${f.date} · ${f.duration}</div>
+      <div class="travel-route">
+        <strong>${f.depart.code}</strong> ${f.depart.time}
+        <span class="arrow">→</span>
+        <strong>${f.arrive.code}</strong> ${f.arrive.time}
+      </div>
+      <div class="travel-detail">${f.seats}</div>
+      ${f.confirmation ? `<div class="travel-detail">Confirmation: <span class="confirm-num">${f.confirmation}</span></div>` : ''}
+    </div>`;
+  });
+  html += '</div>';
+
+  // Train
+  html += '<div class="travel-section"><div class="travel-section-title">Train</div>';
+  html += `<div class="travel-card">
+    <div class="travel-card-title">${t.train.service}</div>
+    <div class="travel-detail">${t.train.date} · ${t.train.class}</div>
+    <div class="travel-route">
+      <strong>NYP</strong> ${t.train.depart.time}
+      <span class="arrow">→</span>
+      <strong>WAS</strong> ${t.train.arrive.time}
+    </div>
+    <div class="travel-detail">${t.train.seats}</div>
+    <div class="travel-detail">Confirmation: <span class="confirm-num">${t.train.confirmation}</span></div>
+  </div></div>`;
+
+  // Hotels
+  html += '<div class="travel-section"><div class="travel-section-title">Hotels</div>';
+  t.hotels.forEach(h => {
+    html += `<div class="travel-card">
+      <div class="travel-card-title">${h.name}</div>
+      <div class="travel-detail">${h.dates}</div>
+      <div class="travel-detail"><strong>${h.room}</strong></div>
+      <div class="travel-detail">${h.address}</div>
+      <div class="travel-detail"><a href="tel:${h.phone.replace(/-/g,'')}" style="color:var(--link-color);text-decoration:none">${h.phone}</a></div>
+      <div class="travel-detail">Confirmation: <span class="confirm-num">${h.confirmation}</span></div>
+    </div>`;
+  });
+  html += '</div>';
+
+  document.getElementById('travelInfo').innerHTML = html;
+}
+
+function toggleTravelModal() {
+  document.getElementById('travelModalOverlay').classList.toggle('open');
+}
+
+function closeTravelModal(e) {
+  if (e.target === e.currentTarget) toggleTravelModal();
+}
+
 function toggleMap(id) {
   const el = document.getElementById(id);
   if (el) {
@@ -802,6 +1083,11 @@ setInterval(() => {
 }, 60000);
 
 init();
+
+// Register service worker for offline support
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
   </script>
 </body>
 </html>
