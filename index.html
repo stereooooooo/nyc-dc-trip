@@ -141,7 +141,7 @@
 
     .day-tabs {
       display: flex;
-      gap: 4px;
+      gap: 2px;
       overflow-x: auto;
       scrollbar-width: none;
       padding-bottom: 0;
@@ -149,10 +149,12 @@
     .day-tabs::-webkit-scrollbar { display: none; }
 
     .day-tab {
-      flex-shrink: 0;
-      padding: 8px 14px;
+      flex: 1 1 0;
+      min-width: 0;
+      padding: 8px 6px;
       border-radius: 10px 10px 0 0;
       font-size: 13px;
+      text-align: center;
       font-weight: 600;
       cursor: pointer;
       background: transparent;
@@ -544,7 +546,7 @@
     }
 
     @media (max-width: 420px) {
-      .day-tab { padding: 6px 10px; font-size: 12px; }
+      .day-tab { padding: 6px 4px; font-size: 11px; }
       .event-title { font-size: 14px; }
       .content { padding: 12px; }
     }
