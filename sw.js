@@ -1,9 +1,10 @@
-const CACHE_NAME = 'browns-trip-v1';
+const CACHE_NAME = 'browns-trip-v2';
+const BASE = self.registration.scope;
 const OFFLINE_ASSETS = [
-  '/',
-  '/index.html',
-  '/icon-192.png',
-  '/icon-512.png'
+  './',
+  './index.html',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 // Install: cache the app shell
@@ -54,7 +55,7 @@ self.addEventListener('fetch', event => {
     }).catch(() => {
       // If both cache and network fail, return the cached index page
       if (event.request.mode === 'navigate') {
-        return caches.match('/index.html');
+        return caches.match(new URL('./index.html', self.registration.scope).href);
       }
     })
   );
