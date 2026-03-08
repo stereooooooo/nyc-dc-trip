@@ -411,6 +411,28 @@
     }
 
     /* Navigation tips */
+    .transit-connector {
+      padding: 6px 10px;
+      margin-bottom: 8px;
+      font-size: 12px;
+      color: var(--link-color);
+      line-height: 1.4;
+      position: relative;
+    }
+    .transit-connector::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 0;
+      width: 10px;
+      height: 100%;
+    }
+    .transit-icon {
+      display: inline;
+      font-size: 11px;
+      margin-right: 4px;
+    }
+
     .nav-tips {
       margin-top: 8px;
       padding: 8px 10px;
@@ -602,11 +624,11 @@ const DAYS = [
       { time: '11:58 AM', title: 'Land at JFK', detail: 'Delta 1411', type: 'transport', loc: 'JFK Airport, New York', tips: ['Follow signs to Ground Transportation on the arrivals level for taxi line.'] },
       { time: '1:30 PM', title: 'Taxi to Manhattan', detail: '~90 min with traffic', type: 'transport', tips: ['Request taxi to 485 5th Ave (Andaz hotel). Flat rate from JFK to Manhattan is around $70 + tolls/tip.', 'Route goes via Belt Pkwy → BQE → Manhattan Bridge or Hugh L. Carey Tunnel.'] },
       { time: '2:00 PM', title: 'Check in: Andaz 5th Avenue', detail: 'Drop bags, freshen up', type: 'highlight', loc: 'Andaz 5th Avenue, New York', tips: ['Hotel is at 485 5th Ave at 41st St, right by the NY Public Library.'] },
-      { time: '2:15 PM', title: 'Lunch: Urban Hawker', detail: 'Singaporean street food', type: 'meal', meal: 1, loc: 'Urban Hawker, New York', tips: ['135 W 50th St — enter from 50th St between 6th and 7th Ave. Walk north on 5th Ave from hotel (~10 min).'] },
-      { time: '3:30 PM', title: 'FAO Schwarz → Nike', detail: '0.3 miles apart', type: 'activity', loc: 'FAO Schwarz, New York', tips: ['From Urban Hawker, walk east on 50th St to 5th Ave, then 1 block south to 49th — FAO is at 30 Rock (~5 min).', 'Walk north on 5th Ave 3 blocks to Nike at 650 5th Ave (at 52nd St).'], walkingMap: { q: 'FAO Schwarz, 30 Rockefeller Plaza, New York', z: 16 } },
-      { time: '5:15 PM', title: 'Spyscape', detail: 'Game zones (~1 hour, reserved)', type: 'highlight', tags: ['reserved'], loc: 'Spyscape, New York', tips: ['928 8th Ave (between 54th & 55th). From Nike, walk west on 52nd St to 8th Ave, then north 2 blocks.'] },
+      { time: '2:15 PM', title: 'Lunch: Urban Hawker', detail: 'Singaporean street food', type: 'meal', meal: 1, loc: 'Urban Hawker, New York', transit: '🚶 Walk north on 5th Ave from hotel (~10 min)', tips: ['135 W 50th St — enter from 50th St between 6th and 7th Ave.'] },
+      { time: '3:30 PM', title: 'FAO Schwarz → Nike', detail: '0.3 miles apart', type: 'activity', loc: 'FAO Schwarz, New York', transit: '🚶 Walk east on 50th St to 5th Ave, then 1 block south to 49th (~5 min)', tips: ['FAO Schwarz is at 30 Rockefeller Plaza. Then walk north on 5th Ave 3 blocks to Nike at 650 5th Ave (at 52nd St).'], walkingMap: { q: 'FAO Schwarz, 30 Rockefeller Plaza, New York', z: 16 } },
+      { time: '5:15 PM', title: 'Spyscape', detail: 'Game zones (~1 hour, reserved)', type: 'highlight', tags: ['reserved'], loc: 'Spyscape, New York', transit: '🚶 From Nike, walk west on 52nd St to 8th Ave, then north 2 blocks (~10 min)', tips: ['928 8th Ave (between 54th & 55th).'] },
       { time: '6:15 PM', title: 'Subway toward West Village', type: 'transport', tips: ['Take the C or E train from 50th St station (8th Ave) to West 4th St–Washington Sq. Exit at 6th Ave side.', "It's about 4 stops, ~12 min ride."] },
-      { time: '7:00 PM', title: 'Dinner: Pizza Loves Emily', detail: 'West Village (reserved)', type: 'meal', meal: 2, tags: ['reserved'], loc: 'Pizza Loves Emily, West Village, New York', tips: ['169 W 10th St. From West 4th St station, walk west on W 4th St, turn right on 7th Ave S, left on W 10th (~5 min).'] }
+      { time: '7:00 PM', title: 'Dinner: Pizza Loves Emily', detail: 'West Village (reserved)', type: 'meal', meal: 2, tags: ['reserved'], loc: 'Pizza Loves Emily, West Village, New York', transit: '🚶 From West 4th St station, walk west on W 4th, right on 7th Ave S, left on W 10th (~5 min)', tips: ['169 W 10th St.'] }
     ]
   },
   {
@@ -618,13 +640,13 @@ const DAYS = [
     subtitle: 'East Village → Tribeca → Chinatown → Broadway',
     city: 'nyc',
     events: [
-      { time: '8:30 AM', title: 'Breakfast: Justin\'s Salt Bread / Librae Bakery', detail: 'East Village', type: 'meal', meal: 1, loc: "Justin's Salt Bread, East Village, New York", tips: ["Justin's Salt Bread is at 179 E 3rd St. Librae Bakery is at 188 E 2nd St — they're one block apart.", 'From Andaz: take the 6 train from Grand Central to Astor Place (~10 min), then walk east.'] },
+      { time: '8:30 AM', title: 'Breakfast: Justin\'s Salt Bread / Librae Bakery', detail: 'East Village', type: 'meal', meal: 1, loc: "Justin's Salt Bread, East Village, New York", transit: '🚇 Take the 6 train from Grand Central to Astor Place (~10 min), then walk east', tips: ["Justin's Salt Bread is at 179 E 3rd St. Librae Bakery is at 188 E 2nd St — they're one block apart."] },
       { time: '9:45 AM', title: 'Subway to Lower Manhattan', type: 'transport', tips: ['From Astor Place, take the 6 train south to Canal St or City Hall (~10 min). Walk west to reach Tribeca/Harrison St area.'] },
       { time: '10:00 AM', title: 'Walk north through Tribeca', detail: 'Harrison Street Row (1800s Federal townhouses), Arcade Bakery, Mysterious Bookshop', type: 'activity', loc: 'Harrison Street, Tribeca, New York', tips: ['Start at Harrison St & Greenwich St for the row houses. Arcade Bakery is at 220 Church St (look for the small alley entrance). Mysterious Bookshop at 58 Warren St.', 'Walk southeast — everything trends toward Canal St and Chinatown.'], walkingMap: { q: 'Harrison St and Greenwich St, Tribeca, New York', z: 15 } },
       { time: '11:30 AM', title: 'Chinatown', detail: 'Canal Street markets, produce vendors — the real neighborhood experience', type: 'activity', loc: 'Canal Street, Chinatown, New York', tips: ['Canal St runs east-west. The best market stalls are on Canal between Mott and Mulberry.', 'Produce vendors cluster on Mulberry south of Canal. Mott St has the best food shops.'], walkingMap: { q: 'Canal St and Mott St, Chinatown, New York', z: 16 } },
       { time: '12:30 PM', title: 'Chinatown Fair & Columbus Park', detail: 'Arcade + park hang', type: 'activity', loc: 'Chinatown Fair Family Fun Center, New York', tips: ['Chinatown Fair is at 8 Mott St (south of Canal). Columbus Park is 1 block east on Mulberry — good people-watching.'] },
-      { time: '1:30 PM', title: 'Banksy Museum of Art', detail: 'Ticketed traveling exhibition — confirm location & hours', type: 'highlight', tags: ['note'], loc: 'Banksy Museum, New York', tips: ['Confirm exact address before going — this is a traveling exhibition that moves locations.', 'Check confirmed location and plan transit from Chinatown accordingly.'] },
-      { time: '3:30 PM', title: 'Nom Wah Tea Parlor (walk-up)', detail: 'Arrive 3:30 to minimize wait. Budget 30–45 min on weekends. No reservations on weekends.', type: 'meal', meal: 2, tags: ['note'], loc: 'Nom Wah Tea Parlor, New York', tips: ['13 Doyers St — a tiny curved alley off Chatham Sq. Look for the red awning.', 'If coming from outside Chinatown, take the subway to Canal St. From Chinatown Fair it\'s a short walk south on Mott St.', 'Put your name in, then browse Doyers St while waiting.'] },
+      { time: '1:30 PM', title: 'Banksy Museum of Art', detail: 'Ticketed traveling exhibition — confirm location & hours', type: 'highlight', tags: ['note'], loc: 'Banksy Museum, New York', transit: '📍 Check confirmed location and plan transit from Chinatown accordingly', tips: ['Confirm exact address before going — this is a traveling exhibition that moves locations.'] },
+      { time: '3:30 PM', title: 'Nom Wah Tea Parlor (walk-up)', detail: 'Arrive 3:30 to minimize wait. Budget 30–45 min on weekends. No reservations on weekends.', type: 'meal', meal: 2, tags: ['note'], loc: 'Nom Wah Tea Parlor, New York', transit: '🚶 From Chinatown Fair, short walk south on Mott St', tips: ['13 Doyers St — a tiny curved alley off Chatham Sq. Look for the red awning.', 'Put your name in, then browse Doyers St while waiting.'] },
       { time: '5:15 PM', title: 'Bibble & Sip or Mango Mango', detail: 'Optional treat if time allows', type: 'activity', tags: ['note'], tips: ["Mango Mango is closer (on Mott St in Chinatown). Bibble & Sip is Midtown (253 W 51st St) — skip if you're heading to Theatre District anyway."] },
       { time: '5:30 PM', title: 'Subway to Theatre District', type: 'transport', tips: ['Take the N/Q/R/W from Canal St station to Times Sq–42nd St. ~15 min ride.', 'Canal St station can be confusing — follow signs for the N/Q/R/W (Broadway) not the 6 (Lexington).'] },
       { time: '6:30 PM', title: 'Broadway: & Juliet', detail: 'Tickets in hand', type: 'highlight', tags: ['reserved'], loc: '& Juliet Broadway, New York', tips: ['Stephen Sondheim Theatre, 124 W 43rd St (between 6th Ave and Broadway). Arrive 15–20 min early.'] },
@@ -640,14 +662,14 @@ const DAYS = [
     subtitle: 'DUMBO → Brooklyn Heights → Prospect Park → Per Se',
     city: 'nyc',
     events: [
-      { time: '9:00 AM', title: 'NYC Ferry to Brooklyn', detail: 'Check East River route schedule in advance', type: 'transport', tags: ['note'], loc: 'NYC Ferry East River', tips: ['From Andaz, walk east on 42nd St to 2nd Ave, then south to the E 34th St Ferry Landing (~15 min walk).', 'Board the East River route ferry. ~25 min to DUMBO.', 'Buy tickets via the NYC Ferry app — $4 per ride. Runs about every 20 min on weekends.'] },
-      { time: '9:30 AM', title: 'Breakfast: Butler Bakeshop', detail: 'DUMBO', type: 'meal', meal: 1, loc: 'Butler Bakeshop, DUMBO, Brooklyn', tips: ['40 Water St. From the DUMBO ferry landing, walk up to Water St and head east (~3 min).'] },
+      { time: '9:00 AM', title: 'NYC Ferry to Brooklyn', detail: 'Check East River route schedule in advance', type: 'transport', tags: ['note'], loc: 'NYC Ferry East River', transit: '🚶 From Andaz, walk east on 42nd St to 2nd Ave, south to E 34th St Ferry Landing (~15 min)', tips: ['Board the East River route ferry. ~25 min to DUMBO.', 'Buy tickets via the NYC Ferry app — $4 per ride. Runs about every 20 min on weekends.'] },
+      { time: '9:30 AM', title: 'Breakfast: Butler Bakeshop', detail: 'DUMBO', type: 'meal', meal: 1, loc: 'Butler Bakeshop, DUMBO, Brooklyn', transit: '🚶 From DUMBO ferry landing, walk up to Water St and head east (~3 min)', tips: ['40 Water St.'] },
       { time: '10:00 AM', title: 'DUMBO Wall photo → Time Out Market', detail: 'Rooftop for free panoramic skyline views', type: 'activity', loc: 'DUMBO, Brooklyn', tips: ['The iconic photo spot is on Washington St at Water St — Manhattan Bridge perfectly frames the Empire State Building.', 'Time Out Market is at 55 Water St. Take the elevator to the rooftop for free skyline views.'], walkingMap: { q: 'Washington St and Water St, DUMBO, Brooklyn', z: 16 } },
       { time: '11:00 AM', title: 'Squibb Park Bridge → Brooklyn Heights Promenade', detail: 'Walk with views', type: 'activity', loc: 'Brooklyn Heights Promenade', tips: ["Enter Squibb Bridge from Main St in DUMBO (near the park). It's a bouncy pedestrian bridge — that's by design!", 'Exit onto the Promenade. Walk south for stunning views of lower Manhattan and the Statue of Liberty.'], walkingMap: { q: 'Brooklyn Heights Promenade, Brooklyn', z: 15 } },
-      { time: '12:15 PM', title: 'Lunch: Tom\'s Restaurant', detail: 'Prospect Heights', type: 'meal', meal: 2, loc: "Tom's Restaurant, Prospect Heights, Brooklyn", tips: ['782 Washington Ave at Sterling Pl. From the Promenade, take the 2/3 train from Clark St to Eastern Pkwy–Brooklyn Museum (~15 min).', "Cash only! There's an ATM nearby. Expect a weekend line but it moves quickly."] },
+      { time: '12:15 PM', title: 'Lunch: Tom\'s Restaurant', detail: 'Prospect Heights', type: 'meal', meal: 2, loc: "Tom's Restaurant, Prospect Heights, Brooklyn", transit: '🚇 From the Promenade, take the 2/3 from Clark St to Eastern Pkwy–Brooklyn Museum (~15 min)', tips: ['782 Washington Ave at Sterling Pl.', "Cash only! There's an ATM nearby. Expect a weekend line but it moves quickly."] },
       { time: '1:30 PM', title: 'Brooklyn Botanical Garden + Prospect Park', type: 'activity', loc: 'Brooklyn Botanic Garden', tips: ["Garden entrance is at 990 Washington Ave, right next to Tom's. $18 adults, free for kids under 12.", "Prospect Park's main entrance (Grand Army Plaza) is just north of the garden."] },
       { time: '4:00 PM', title: 'Return to Andaz', detail: 'Relax, get ready', type: 'transport', loc: 'Andaz 5th Avenue, New York', tips: ['Take the 2/3 from Eastern Pkwy–Brooklyn Museum one stop to Atlantic Ave–Barclays Center, transfer to the 4/5 express to Grand Central (~25 min). Or Uber (~30 min).'] },
-      { time: '7:45 PM', title: 'Dinner: Per Se', detail: 'Adults only, kids at hotel with friends', type: 'meal', meal: 3, tags: ['reserved'], loc: 'Per Se, New York', tips: ['From Andaz, walk west on 42nd to Times Square, then north on Broadway to Columbus Circle (~25 min). Or take the 1/A/C/E to 59th St–Columbus Circle.', '10 Columbus Circle, 4th floor (Time Warner Center). Enter from Columbus Circle, take elevator to 4th floor.', 'Dress code: jackets required for men. No jeans or sneakers. Allow 3+ hours for the full tasting menu.'] }
+      { time: '7:45 PM', title: 'Dinner: Per Se', detail: 'Adults only, kids at hotel with friends', type: 'meal', meal: 3, tags: ['reserved'], loc: 'Per Se, New York', transit: '🚶 Walk west on 42nd to Times Sq, north on Broadway to Columbus Circle (~25 min). Or 🚇 1/A/C/E to 59th St–Columbus Circle', tips: ['10 Columbus Circle, 4th floor (Time Warner Center). Enter from Columbus Circle, take elevator to 4th floor.', 'Dress code: jackets required for men. No jeans or sneakers. Allow 3+ hours for the full tasting menu.'] }
     ]
   },
   {
@@ -660,13 +682,13 @@ const DAYS = [
     city: 'travel',
     events: [
       { time: '9:30 AM', title: 'Check out of Andaz', type: 'transport', loc: 'Andaz 5th Avenue, New York', tips: ['Store luggage with the bell desk if needed before breakfast.'] },
-      { time: '9:30 AM', title: 'Breakfast: Moynihan Train Hall', detail: 'Food hall', type: 'meal', meal: 1, loc: 'Moynihan Train Hall, New York', tips: ['From Andaz at 42nd & 5th, walk west on 42nd to 8th Ave, then south to 31st St entrance (~20 min). Or take the B/D/F/M from 42nd St–Bryant Park to 34th St–Herald Sq, then walk west to 8th Ave.', 'Moynihan Train Hall is across 8th Ave from old Penn Station. Enter from 31st St for the grand hall.', "Good food options: Burger Joint, Jacob's Pickles, Sauce Pizzeria. Plenty of seating in the main hall."] },
+      { time: '9:30 AM', title: 'Breakfast: Moynihan Train Hall', detail: 'Food hall', type: 'meal', meal: 1, loc: 'Moynihan Train Hall, New York', transit: '🚶 Walk west on 42nd to 8th Ave, south to 31st St (~20 min). Or 🚇 B/D/F/M from Bryant Park to 34th St–Herald Sq', tips: ['Moynihan Train Hall is across 8th Ave from old Penn Station. Enter from 31st St for the grand hall.', "Good food options: Burger Joint, Jacob's Pickles, Sauce Pizzeria. Plenty of seating in the main hall."] },
       { time: '11:00 AM', title: 'Acela 2155 departs Penn Station', type: 'transport', tags: ['reserved'], loc: 'Penn Station, New York', tips: ['Amtrak boards from Moynihan Train Hall. Track is announced ~15 min before departure on the big board.', 'First Class has dedicated lounge (ClubAcela) on the concourse level. Bring ID for check-in.'] },
       { time: '1:00 PM', title: 'Lunch: Acela cafe car or Union Station', type: 'meal', meal: 2, tips: ['The cafe car is in the middle of the train. First Class gets complimentary food and drinks at your seat.'] },
       { time: '1:53 PM', title: 'Arrive Washington Union Station', type: 'transport', loc: 'Union Station, Washington DC', tips: ['Acela arrives on the lower level. Take escalators up to the Main Hall.', 'Taxi stand is at the front entrance (Columbus Circle side). Uber pickup is also at the front.'] },
-      { time: '2:30 PM', title: 'Check in: Riggs Washington DC', type: 'highlight', loc: 'Riggs Washington DC', tips: ['900 F St NW — a former bank building. About 10 min taxi from Union Station.', 'The bar downstairs (Silver Lyan) is excellent if you have time.'] },
-      { time: '3:30 PM', title: 'National Museum of Natural History', detail: 'Closes 5:30 PM', type: 'activity', loc: 'National Museum of Natural History, Washington DC', tips: ['10th St & Constitution Ave NW. ~10 min walk from Riggs — head south on 9th St to the Mall.', "Don't miss the Hope Diamond (2nd floor, Geology Hall). Free admission, no tickets needed."] },
-      { time: '6:30 PM', title: 'Dinner: Oyamel', type: 'meal', meal: 3, loc: 'Oyamel, Washington DC', tips: ['401 7th St NW — about 5 min walk from the museum area. Upscale Mexican small plates by José Andrés.'] }
+      { time: '2:30 PM', title: 'Check in: Riggs Washington DC', type: 'highlight', loc: 'Riggs Washington DC', transit: '🚕 ~10 min taxi from Union Station', tips: ['900 F St NW — a former bank building.', 'The bar downstairs (Silver Lyan) is excellent if you have time.'] },
+      { time: '3:30 PM', title: 'National Museum of Natural History', detail: 'Closes 5:30 PM', type: 'activity', loc: 'National Museum of Natural History, Washington DC', transit: '🚶 ~10 min walk from Riggs — head south on 9th St to the Mall', tips: ['10th St & Constitution Ave NW. Free admission, no tickets needed.', "Don't miss the Hope Diamond (2nd floor, Geology Hall)."] },
+      { time: '6:30 PM', title: 'Dinner: Oyamel', type: 'meal', meal: 3, loc: 'Oyamel, Washington DC', transit: '🚶 ~5 min walk north from the museum area', tips: ['401 7th St NW. Upscale Mexican small plates by José Andrés.'] }
     ]
   },
   {
@@ -678,12 +700,12 @@ const DAYS = [
     subtitle: 'Monuments → Museums → Dinner',
     city: 'dc',
     events: [
-      { time: '8:00 AM', title: 'Breakfast: Lincoln\'s Waffle Shop', detail: '2 blocks from Riggs', type: 'meal', meal: 1, loc: "Lincoln's Waffle Shop, Washington DC", tips: ['504 10th St NW. Old-school diner, cash friendly. Walk south from Riggs on 9th, left on E St.'] },
-      { time: '9:00 AM', title: 'White House → National Mall', detail: 'Exterior photos, walk to Lincoln Memorial, Vietnam Veterans Memorial, Korean War Veterans Memorial', type: 'highlight', loc: 'White House, Washington DC', tips: ['From the Waffle Shop on 10th St, walk south to E St NW, then west to 15th St and south to Pennsylvania Ave (~10 min).', 'Best White House photo spot: north side from Pennsylvania Ave (Lafayette Square).', 'Walk south through the Ellipse to the Mall, then head west toward Lincoln Memorial. Total walk is ~2 miles — wear comfortable shoes.', 'Vietnam Memorial is just northeast of Lincoln Memorial. Korean War Memorial is just south. Hit all three in sequence.'], walkingMap: { q: 'National Mall, Washington DC', z: 14 } },
-      { time: '12:00 PM', title: 'Lunch: Love, Makoto', detail: 'Food hall', type: 'meal', meal: 2, loc: 'Love Makoto, Washington DC', tips: ['From the Mall, take the Blue/Orange/Silver line from Smithsonian station to Capitol South (~5 min). Love, Makoto is at 1st St SE near the Capitol.'] },
-      { time: '2:00 PM', title: 'National Air and Space Museum', detail: 'Reserve timed-entry in advance', type: 'activity', tags: ['reserved'], loc: 'National Air and Space Museum, Washington DC', tips: ['From Love, Makoto, walk west along Independence Ave back toward the Mall (~15 min). Air & Space is on the south side at 6th St.', '600 Independence Ave SW. Enter from Independence Ave.', "Don't miss: Wright Brothers flyer (1st floor), Apollo 11 command module, SR-71 Blackbird."] },
-      { time: '3:30 PM', title: 'Hirshhorn Museum', type: 'activity', loc: 'Hirshhorn Museum, Washington DC', tips: ['Directly next to Air & Space on the Mall — just walk west. The sculpture garden outside is free and great for kids.'] },
-      { time: '6:30 PM', title: 'Dinner: Zaytinya', detail: 'Reserved', type: 'meal', meal: 3, tags: ['reserved'], loc: 'Zaytinya, Washington DC', tips: ['701 9th St NW. Mediterranean small plates by José Andrés. ~15 min walk north from the Mall museums back toward Riggs area.'] }
+      { time: '8:00 AM', title: 'Breakfast: Lincoln\'s Waffle Shop', detail: '2 blocks from Riggs', type: 'meal', meal: 1, loc: "Lincoln's Waffle Shop, Washington DC", transit: '🚶 Walk south from Riggs on 9th, left on E St (~5 min)', tips: ['504 10th St NW. Old-school diner, cash friendly.'] },
+      { time: '9:00 AM', title: 'White House → National Mall', detail: 'Exterior photos, walk to Lincoln Memorial, Vietnam Veterans Memorial, Korean War Veterans Memorial', type: 'highlight', loc: 'White House, Washington DC', transit: '🚶 Walk south to E St NW, west to 15th St, south to Pennsylvania Ave (~10 min)', tips: ['Best White House photo spot: north side from Pennsylvania Ave (Lafayette Square).', 'Walk south through the Ellipse to the Mall, then head west toward Lincoln Memorial. Total walk is ~2 miles — wear comfortable shoes.', 'Vietnam Memorial is just northeast of Lincoln Memorial. Korean War Memorial is just south. Hit all three in sequence.'], walkingMap: { q: 'National Mall, Washington DC', z: 14 } },
+      { time: '12:00 PM', title: 'Lunch: Love, Makoto', detail: 'Food hall', type: 'meal', meal: 2, loc: 'Love Makoto, Washington DC', transit: '🚇 Blue/Orange/Silver line from Smithsonian station to Capitol South (~5 min)', tips: ['1st St SE near the Capitol.'] },
+      { time: '2:00 PM', title: 'National Air and Space Museum', detail: 'Reserve timed-entry in advance', type: 'activity', tags: ['reserved'], loc: 'National Air and Space Museum, Washington DC', transit: '🚶 Walk west along Independence Ave back toward the Mall (~15 min)', tips: ['600 Independence Ave SW. Enter from Independence Ave.', "Don't miss: Wright Brothers flyer (1st floor), Apollo 11 command module, SR-71 Blackbird."] },
+      { time: '3:30 PM', title: 'Hirshhorn Museum', type: 'activity', loc: 'Hirshhorn Museum, Washington DC', transit: '🚶 Right next door — walk west on the Mall', tips: ['The sculpture garden outside is free and great for kids.'] },
+      { time: '6:30 PM', title: 'Dinner: Zaytinya', detail: 'Reserved', type: 'meal', meal: 3, tags: ['reserved'], loc: 'Zaytinya, Washington DC', transit: '🚶 ~15 min walk north from the Mall museums back toward Riggs area', tips: ['701 9th St NW. Mediterranean small plates by José Andrés.'] }
     ]
   },
   {
@@ -695,13 +717,13 @@ const DAYS = [
     subtitle: 'National Archives → Georgetown → The Wharf',
     city: 'dc',
     events: [
-      { time: '9:00 AM', title: 'Breakfast: Tatte', type: 'meal', meal: 1, loc: 'Tatte, Washington DC', tips: ['Multiple DC locations — the one at 1200 New Hampshire Ave NW is closest to downtown.', 'From Riggs, Uber (~10 min) or take the Red line from Metro Center to Dupont Circle, then walk south on New Hampshire Ave.'] },
-      { time: '10:00 AM', title: 'National Archives', detail: 'All-day tickets reserved', type: 'highlight', tags: ['reserved'], loc: 'National Archives, Washington DC', tips: ['From Tatte, take the Red line from Dupont Circle to Gallery Place–Chinatown (2 stops), then walk south on 7th St to the Archives (~5 min walk). Or Uber back downtown (~10 min).', '701 Constitution Ave NW. Enter from Constitution Ave side.', 'See the Declaration of Independence, Constitution, and Bill of Rights. No photos allowed in the Rotunda.'] },
-      { time: '11:30 AM', title: 'National Portrait Gallery + Kogod Courtyard', type: 'activity', loc: 'National Portrait Gallery, Washington DC', tips: ['8th & G St NW — ~5 min walk from Archives. Enter from G St.', 'The Kogod Courtyard (covered atrium) is beautiful and a great rest stop. Free admission.'] },
+      { time: '9:00 AM', title: 'Breakfast: Tatte', type: 'meal', meal: 1, loc: 'Tatte, Washington DC', transit: '🚕 Uber (~10 min) or 🚇 Red line from Metro Center to Dupont Circle, walk south on New Hampshire Ave', tips: ['1200 New Hampshire Ave NW.'] },
+      { time: '10:00 AM', title: 'National Archives', detail: 'All-day tickets reserved', type: 'highlight', tags: ['reserved'], loc: 'National Archives, Washington DC', transit: '🚇 Red line from Dupont Circle to Gallery Place (2 stops), walk south on 7th St (~5 min). Or 🚕 Uber (~10 min)', tips: ['701 Constitution Ave NW. Enter from Constitution Ave side.', 'See the Declaration of Independence, Constitution, and Bill of Rights. No photos allowed in the Rotunda.'] },
+      { time: '11:30 AM', title: 'National Portrait Gallery + Kogod Courtyard', type: 'activity', loc: 'National Portrait Gallery, Washington DC', transit: '🚶 ~5 min walk north from Archives', tips: ['8th & G St NW. Enter from G St.', 'The Kogod Courtyard (covered atrium) is beautiful and a great rest stop. Free admission.'] },
       { time: '1:15 PM', title: 'Uber to Georgetown', type: 'transport', tips: ['Georgetown has no Metro stop — Uber is the best option. ~10 min ride.', 'Ask driver to drop you at Wisconsin Ave & M St NW (main intersection of Georgetown).'] },
-      { time: '1:45 PM', title: 'Lunch: Martin\'s Tavern', type: 'meal', meal: 2, loc: "Martin's Tavern, Georgetown, Washington DC", tips: ['1264 Wisconsin Ave NW — walk north on Wisconsin from M St, about 4 blocks. JFK proposed to Jackie in Booth 3!'] },
-      { time: '3:15 PM', title: 'Dumbarton Oaks Gardens', detail: 'Check March hours. If closed: Wisconsin Ave shops + Book Hill', type: 'activity', tags: ['note'], loc: 'Dumbarton Oaks, Washington DC', tips: ["1703 32nd St NW. From Martin's, walk north on Wisconsin, right on R St, left on 32nd. ~10 min.", 'If closed: Book Hill (Wisconsin Ave north of R St) has charming antique shops and boutiques.'] },
-      { time: '4:00 PM', title: 'Georgetown Waterfront Park', detail: 'Walk the piers, watch crew teams on the Potomac', type: 'activity', loc: 'Georgetown Waterfront Park, Washington DC', tips: ['Walk south on Wisconsin Ave to K St NW, then east to the waterfront. ~10 min downhill walk.', 'Great sunset views facing south toward the Potomac and Kennedy Center.'], walkingMap: { q: 'Georgetown Waterfront Park, Washington DC', z: 15 } },
+      { time: '1:45 PM', title: 'Lunch: Martin\'s Tavern', type: 'meal', meal: 2, loc: "Martin's Tavern, Georgetown, Washington DC", transit: '🚶 Walk north on Wisconsin Ave from M St, about 4 blocks', tips: ['1264 Wisconsin Ave NW. JFK proposed to Jackie in Booth 3!'] },
+      { time: '3:15 PM', title: 'Dumbarton Oaks Gardens', detail: 'Check March hours. If closed: Wisconsin Ave shops + Book Hill', type: 'activity', tags: ['note'], loc: 'Dumbarton Oaks, Washington DC', transit: "🚶 From Martin's, walk north on Wisconsin, right on R St, left on 32nd (~10 min)", tips: ['1703 32nd St NW.', 'If closed: Book Hill (Wisconsin Ave north of R St) has charming antique shops and boutiques.'] },
+      { time: '4:00 PM', title: 'Georgetown Waterfront Park', detail: 'Walk the piers, watch crew teams on the Potomac', type: 'activity', loc: 'Georgetown Waterfront Park, Washington DC', transit: '🚶 Walk south on Wisconsin Ave to K St NW, east to the waterfront (~10 min downhill)', tips: ['Great sunset views facing south toward the Potomac and Kennedy Center.'], walkingMap: { q: 'Georgetown Waterfront Park, Washington DC', z: 15 } },
       { time: '4:30 PM', title: 'Baked and Wired', detail: 'Cupcakes to-go, eat at waterfront', type: 'activity', loc: 'Baked and Wired, Georgetown, Washington DC', tips: ['1052 Thomas Jefferson St NW — right near the waterfront. Their cupcakes and Texas sheet cake are the stars.'] },
       { time: '5:00 PM', title: 'Uber to The Wharf', detail: '~10 min', type: 'transport', loc: 'The Wharf, Washington DC', tips: ['The Wharf is along Maine Ave SW on the waterfront. Ask Uber to drop you at Transit Pier.'] },
       { time: '5:30 PM', title: 'The Wharf', detail: 'Piers, fire pits, outdoor games', type: 'activity', loc: 'The Wharf, Washington DC', tips: ['Walk the full boardwalk from Transit Pier south to Recreation Pier. Fire pits are at District Pier (center).'] },
@@ -717,10 +739,10 @@ const DAYS = [
     subtitle: 'Spy Museum → Capitol Hill → DCA → Home',
     city: 'dc',
     events: [
-      { time: '7:30 AM', title: 'Breakfast: Maman', detail: '9th St NW', type: 'meal', meal: 1, loc: 'Maman, 9th St NW, Washington DC', tips: ['Maman is a French-style cafe. Good pastries, coffee, and egg sandwiches. ~5 min walk from Riggs.'] },
-      { time: '9:00 AM', title: 'International Spy Museum', detail: 'Reserve timed-entry — sells out', type: 'highlight', tags: ['reserved'], loc: 'International Spy Museum, Washington DC', tips: ["From Maman, take the Green/Yellow line from Gallery Place–Chinatown to L'Enfant Plaza (2 stops). Or walk south through the Mall (~20 min).", "700 L'Enfant Plaza SW. Enter from the plaza level (look for the museum entrance near the L'Enfant Metro exit).", 'Allow 2–2.5 hours. The interactive spy mission on the top floor is the highlight for kids.'] },
-      { time: '10:45 AM', title: 'National Postal Museum', detail: 'Interactive, great for kids', type: 'activity', loc: 'National Postal Museum, Washington DC', tips: ['2 Massachusetts Ave NE — directly across from Union Station. Free admission.', "From Spy Museum, take the Green/Yellow line from L'Enfant Plaza to Gallery Place–Chinatown (2 stops), transfer to the Red line 1 stop to Union Station. ~10 min total.", 'The mail sorting interactive exhibit and stamp collection are highlights for kids.'] },
-      { time: '1:00 PM', title: 'Farewell Lunch: Union Market', detail: 'Food hall', type: 'meal', meal: 2, loc: 'Union Market, Washington DC', tips: ['1309 5th St NE — about 10 min Uber from Union Station area. Lots of food vendors under one roof.', 'Highlights: Takorean (Korean tacos), Rappahannock Oyster Bar, Bidwell for cocktails.'] },
+      { time: '7:30 AM', title: 'Breakfast: Maman', detail: '9th St NW', type: 'meal', meal: 1, loc: 'Maman, 9th St NW, Washington DC', transit: '🚶 ~5 min walk from Riggs', tips: ['French-style cafe. Good pastries, coffee, and egg sandwiches.'] },
+      { time: '9:00 AM', title: 'International Spy Museum', detail: 'Reserve timed-entry — sells out', type: 'highlight', tags: ['reserved'], loc: 'International Spy Museum, Washington DC', transit: "🚇 Green/Yellow line from Gallery Place–Chinatown to L'Enfant Plaza (2 stops). Or 🚶 walk south through the Mall (~20 min)", tips: ["700 L'Enfant Plaza SW. Enter from the plaza level.", 'Allow 2–2.5 hours. The interactive spy mission on the top floor is the highlight for kids.'] },
+      { time: '10:45 AM', title: 'National Postal Museum', detail: 'Interactive, great for kids', type: 'activity', loc: 'National Postal Museum, Washington DC', transit: "🚇 Green/Yellow from L'Enfant Plaza to Gallery Place (2 stops), transfer Red line 1 stop to Union Station (~10 min)", tips: ['2 Massachusetts Ave NE — directly across from Union Station. Free admission.', 'The mail sorting interactive exhibit and stamp collection are highlights for kids.'] },
+      { time: '1:00 PM', title: 'Farewell Lunch: Union Market', detail: 'Food hall', type: 'meal', meal: 2, loc: 'Union Market, Washington DC', transit: '🚕 ~10 min Uber from Union Station area', tips: ['1309 5th St NE. Lots of food vendors under one roof.', 'Highlights: Takorean (Korean tacos), Rappahannock Oyster Bar, Bidwell for cocktails.'] },
       { time: '2:30 PM', title: 'Return to Riggs', detail: 'Collect stored luggage', type: 'transport', loc: 'Riggs Washington DC', tips: ['~10 min Uber from Union Market. Make sure all bags are packed and ready before heading to the airport.'] },
       { time: '3:30 PM', title: 'Taxi to DCA', type: 'transport', loc: 'Ronald Reagan Washington National Airport', tips: ['Reagan National (DCA) is very close — only ~15 min taxi from downtown DC.', 'Southwest uses Terminal A (new terminal) or Terminal B/C. Check your boarding pass for terminal.'] },
       { time: '5:00 PM', title: 'Dinner: Airport or plane', type: 'meal', meal: 3, tips: ['If eating at DCA: Terminal B/C has decent options including District Tap House and Cava.'] },
@@ -922,6 +944,11 @@ function renderDay() {
   `;
 
   day.events.forEach((ev, i) => {
+    // Transit connector between cards
+    if (ev.transit) {
+      html += `<div class="transit-connector"><span class="transit-icon">▸</span>${ev.transit}</div>`;
+    }
+
     const isCurrent = (i === currentIdx);
     const evClass = ev.type === 'meal' ? 'meal' :
                     ev.type === 'highlight' ? (day.city === 'dc' ? 'highlight-dc' : 'highlight') : '';
